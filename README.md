@@ -1,3 +1,20 @@
+This is a simple password generator application utilizing vanilla javascript, html, bootstrap and css. 
+The following criteria is included in this password generator:
+1. Password length between 8-128
+2. Include special characters
+3. Include uppercase characters
+4. Include lowercase characters
+5. Include numbers
+
+Users will be prompted for this criteria and after it is validated, a password will be randomly generated. 
+
+Please enjoy!
+
+
+
+
+
+
 # 03 JavaScript: Password Generator
 
 Create an application that generates a random password based on user-selected criteria. This app will run in the browser and feature dynamically updated HTML and CSS powered by your JavaScript code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.

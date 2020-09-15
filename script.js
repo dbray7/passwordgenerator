@@ -1,41 +1,79 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var specialCharactersList = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "\:", "\;", " < ", "=", " > ", " ? ", "@", "[", "\\", "]", " ^ ", "_", "`", "{", "|", "}", "~"];
+var specialCharactersList = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "\:", "\;", "<", "=", " >", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var number = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var password;
+var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 //generate password based on criteria
+
+function passwordLengthValidation() {
+  var passwordLength = parseInt(prompt("How many characters do you want your password to be? Must be between 8 and 128"));
+  if (!passwordLength) {
+    alert("Enter a number");
+    passwordLengthValidation();
+  } else if (passwordLength < 8) {
+    alert("Enter a number greater than 8");
+    passwordLengthValidation();
+  }
+  else if (passwordLength > 128) {
+    alert("Enter a number less than 128");
+    passwordLengthValidation();
+  }
+  return passwordLength;
+}
 function generatePassword() {
-  var maxPasswordLength = prompt("Maximum password length:");
-  var minPasswordLength = prompt("Minumum password length:");
-  var specialCharacters = confirm("Do you want to include special characters");
+  var password = [];
+  var passwordLength = passwordLengthValidation();
+  var specialCharacters = confirm("Do you want to include special characters?");
   var uppercase = confirm("Do you want to include uppercase letters?");
   var lowercase = confirm("Do you want to include lowercase letters?");
-  var randomCharacter = Math.floor(Math.random() * specialCharacters.length);
-  var randomUpperLetter = Math.floor(Math.random() * alphabet.length).toUpperCase();
-  var randomLowerLetter = Math.floor(Math.random() * alphabet.length).toLowerCase();
-  var randomNumber = Math.floor(Math.random() * number.length);
+  var number = confirm("Do you want to include a number?");
+  var randomCharacter = specialCharactersList[Math.floor(Math.random() * specialCharactersList.length)];
+  var randomUpperLetter = alphabet[Math.floor(Math.random() * alphabet.length)].toUpperCase();
+  var randomLowerLetter = alphabet[Math.floor(Math.random() * alphabet.length)].toLowerCase();
+  var randomNumber = numbers[Math.floor(Math.random() * numbers.length)];
   if (specialCharacters) {
-
-  } else {
-
+    password.push(randomCharacter);
   }
   if (uppercase) {
-
-  } else {
-
+    password.push(randomUpperLetter);
   }
   if (lowercase) {
-
+    password.push(randomLowerLetter);
+  }
+  if (number) {
+    password.push(randomNumber);
+  }
+  var remainingPassword = [];
+  if (passwordLength > password.length) {
+    passwordLength = passwordLength - password.length;
+  }
+  var remainingSection = [];
+  if (lowercase) {
+    remainingSection = remainingSection.concat(alphabet);
+  }
+  if (uppercase) {
+    alphabet.forEach(element => {
+      remainingSection.push(element.toUpperCase());
+    });
+  }
+  if (number) {
+    remainingSection = remainingSection.concat(numbers);
+  }
+  if (specialCharacters) {
+    remainingSection = remainingSection.concat(specialCharactersList);
+  }
+  for (let index = 0; index < passwordLength; index++) {
+    remainingPassword.push(remainingSection[index]);
+  }
+  var concatPassword = password.concat(remainingPassword).join("");
+  if (concatPassword === "") {
+    alert("Cannot create password, please select at least one criteria")
   } else {
-
+    console.log("length" + password.concat(remainingPassword).length);
+    return concatPassword;
   }
 }
-//where prompts and validations go
 
-//must return a password
-
-// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
